@@ -1,0 +1,878 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "Hero API",
+        "version": "1.0",
+        "description": "This API allows CRUD operations on a hero",
+        "contact": {
+            "name": "Quarkus",
+            "url": "https://github.com/ocp4labs/bbva_ninja/tree/master/chapter_quarkus"
+        }
+    },
+    "servers": [
+        {
+            "url": "https://routemfed9lrw-usernamenotfound-che.b542.starter-us-east-2a.openshiftapps.com/api/heroes/random"
+        }
+    ],
+    "paths": {
+        "/api/heroes": {
+            "get": {
+                "responses": {
+                    "204": {
+                        "description": "No heroes"
+                    },
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Hero"
+                                    }
+                                }
+                            }
+                        },
+                        "description": "OK"
+                    }
+                },
+                "summary": "Returns all the heroes from the database"
+            },
+            "put": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Hero"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Hero"
+                                }
+                            }
+                        },
+                        "description": "The updated hero"
+                    }
+                },
+                "summary": "Updates an exiting  hero"
+            },
+            "post": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Hero"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "format": "uri",
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "description": "The URI of the created hero"
+                    }
+                },
+                "summary": "Creates a valid hero"
+            }
+        },
+        "/api/heroes/hello": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/heroes/random": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Hero"
+                                }
+                            }
+                        },
+                        "description": "OK"
+                    }
+                },
+                "summary": "Returns a random hero"
+            }
+        },
+        "/api/heroes/{id}": {
+            "get": {
+                "parameters": [
+                    {
+                        "name": "id",
+                        "description": "Hero identifier",
+                        "schema": {
+                            "format": "int64",
+                            "type": "integer"
+                        },
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "The hero is not found for a given identifier"
+                    },
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Hero"
+                                }
+                            }
+                        },
+                        "description": "OK"
+                    }
+                },
+                "summary": "Returns a hero for a given identifier"
+            },
+            "delete": {
+                "parameters": [
+                    {
+                        "name": "id",
+                        "description": "Hero identifier",
+                        "schema": {
+                            "format": "int64",
+                            "type": "integer"
+                        },
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+
+                    }
+                },
+                "summary": "Deletes an exiting hero"
+            }
+        },
+        "/api/heroes/{nombre}": {
+            "get": {
+                "parameters": [
+                    {
+                        "examples": {
+                            "Nombre": {
+                                "value": "Batman"
+                            }
+                        },
+                        "name": "nombre",
+                        "description": "",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "in": "path",
+                        "required": true
+                    }
+                ]
+            },
+            "parameters": [
+                {
+                    "examples": {
+                        "Nombre": {
+                            "value": "Batman"
+                        }
+                    },
+                    "name": "nombre",
+                    "description": "",
+                    "schema": {
+                        "type": "string"
+                    },
+                    "in": "path",
+                    "required": true
+                }
+            ]
+        }
+    },
+    "components": {
+        "schemas": {
+            "EntityManager": {
+                "type": "object",
+                "properties": {
+                    "criteriaBuilder": {
+                        "$ref": "#/components/schemas/CriteriaBuilder"
+                    },
+                    "delegate": {
+                        "type": "object"
+                    },
+                    "entityManagerFactory": {
+                        "$ref": "#/components/schemas/EntityManagerFactory"
+                    },
+                    "flushMode": {
+                        "$ref": "#/components/schemas/FlushModeType"
+                    },
+                    "metamodel": {
+                        "$ref": "#/components/schemas/Metamodel"
+                    },
+                    "properties": {
+                        "$ref": "#/components/schemas/MapStringObject"
+                    },
+                    "transaction": {
+                        "$ref": "#/components/schemas/EntityTransaction"
+                    },
+                    "joinedToTransaction": {
+                        "type": "boolean"
+                    },
+                    "open": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "CriteriaBuilder": {
+                "type": "object"
+            },
+            "EntityManagerFactory": {
+                "type": "object",
+                "properties": {
+                    "cache": {
+                        "$ref": "#/components/schemas/Cache"
+                    },
+                    "criteriaBuilder": {
+                        "$ref": "#/components/schemas/CriteriaBuilder"
+                    },
+                    "metamodel": {
+                        "$ref": "#/components/schemas/Metamodel"
+                    },
+                    "persistenceUnitUtil": {
+                        "$ref": "#/components/schemas/PersistenceUnitUtil"
+                    },
+                    "properties": {
+                        "$ref": "#/components/schemas/MapStringObject"
+                    },
+                    "open": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "FlushModeType": {
+                "enum": [
+                    "AUTO",
+                    "COMMIT"
+                ],
+                "type": "string"
+            },
+            "Metamodel": {
+                "type": "object",
+                "properties": {
+                    "embeddables": {
+                        "$ref": "#/components/schemas/SetEmbeddableTypeObject"
+                    },
+                    "entities": {
+                        "$ref": "#/components/schemas/SetEntityTypeObject"
+                    },
+                    "managedTypes": {
+                        "$ref": "#/components/schemas/SetManagedTypeObject"
+                    }
+                }
+            },
+            "MapStringObject": {
+                "type": "object",
+                "additionalProperties": {
+
+                }
+            },
+            "EntityTransaction": {
+                "type": "object",
+                "properties": {
+                    "rollbackOnly": {
+                        "type": "boolean"
+                    },
+                    "active": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "EmbeddableTypeObject": {
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "$ref": "#/components/schemas/SetAttributeSuperObjectObject"
+                    },
+                    "declaredAttributes": {
+                        "$ref": "#/components/schemas/SetAttributeObjectObject"
+                    },
+                    "declaredPluralAttributes": {
+                        "$ref": "#/components/schemas/SetPluralAttributeObjectObjectObject"
+                    },
+                    "declaredSingularAttributes": {
+                        "$ref": "#/components/schemas/SetSingularAttributeObjectObject"
+                    },
+                    "pluralAttributes": {
+                        "$ref": "#/components/schemas/SetPluralAttributeSuperObjectObjectObject"
+                    },
+                    "singularAttributes": {
+                        "$ref": "#/components/schemas/SetSingularAttributeSuperObjectObject"
+                    },
+                    "javaType": {
+                        "type": "object"
+                    },
+                    "persistenceType": {
+                        "$ref": "#/components/schemas/PersistenceType"
+                    }
+                }
+            },
+            "SetEmbeddableTypeObject": {
+                "uniqueItems": true,
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/EmbeddableTypeObject"
+                }
+            },
+            "EntityTypeObject": {
+                "type": "object",
+                "properties": {
+                    "idClassAttributes": {
+                        "$ref": "#/components/schemas/SetSingularAttributeSuperObjectObject"
+                    },
+                    "idType": {
+                        "$ref": "#/components/schemas/TypeObject"
+                    },
+                    "supertype": {
+                        "$ref": "#/components/schemas/IdentifiableTypeSuperObject"
+                    },
+                    "attributes": {
+                        "$ref": "#/components/schemas/SetAttributeSuperObjectObject"
+                    },
+                    "declaredAttributes": {
+                        "$ref": "#/components/schemas/SetAttributeObjectObject"
+                    },
+                    "declaredPluralAttributes": {
+                        "$ref": "#/components/schemas/SetPluralAttributeObjectObjectObject"
+                    },
+                    "declaredSingularAttributes": {
+                        "$ref": "#/components/schemas/SetSingularAttributeObjectObject"
+                    },
+                    "pluralAttributes": {
+                        "$ref": "#/components/schemas/SetPluralAttributeSuperObjectObjectObject"
+                    },
+                    "singularAttributes": {
+                        "$ref": "#/components/schemas/SetSingularAttributeSuperObjectObject"
+                    },
+                    "javaType": {
+                        "type": "object"
+                    },
+                    "persistenceType": {
+                        "$ref": "#/components/schemas/PersistenceType"
+                    },
+                    "bindableJavaType": {
+                        "type": "object"
+                    },
+                    "bindableType": {
+                        "$ref": "#/components/schemas/BindableType"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "SetEntityTypeObject": {
+                "uniqueItems": true,
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/EntityTypeObject"
+                }
+            },
+            "ManagedTypeObject": {
+                "type": "object",
+                "properties": {
+                    "javaType": {
+                        "type": "object"
+                    },
+                    "persistenceType": {
+                        "$ref": "#/components/schemas/PersistenceType"
+                    },
+                    "attributes": {
+                        "$ref": "#/components/schemas/SetAttributeSuperObjectObject"
+                    },
+                    "declaredAttributes": {
+                        "$ref": "#/components/schemas/SetAttributeObjectObject"
+                    },
+                    "declaredPluralAttributes": {
+                        "$ref": "#/components/schemas/SetPluralAttributeObjectObjectObject"
+                    },
+                    "declaredSingularAttributes": {
+                        "$ref": "#/components/schemas/SetSingularAttributeObjectObject"
+                    },
+                    "pluralAttributes": {
+                        "$ref": "#/components/schemas/SetPluralAttributeSuperObjectObjectObject"
+                    },
+                    "singularAttributes": {
+                        "$ref": "#/components/schemas/SetSingularAttributeSuperObjectObject"
+                    }
+                }
+            },
+            "SetManagedTypeObject": {
+                "uniqueItems": true,
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/ManagedTypeObject"
+                }
+            },
+            "PersistenceType": {
+                "enum": [
+                    "BASIC",
+                    "EMBEDDABLE",
+                    "ENTITY",
+                    "MAPPED_SUPERCLASS"
+                ],
+                "type": "string"
+            },
+            "AttributeSuperObjectObject": {
+                "type": "object",
+                "properties": {
+                    "declaringType": {
+                        "$ref": "#/components/schemas/ManagedTypeSuperObject"
+                    },
+                    "javaMember": {
+                        "type": "object"
+                    },
+                    "javaType": {
+                        "type": "object"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "persistentAttributeType": {
+                        "$ref": "#/components/schemas/PersistentAttributeType"
+                    },
+                    "association": {
+                        "type": "boolean"
+                    },
+                    "collection": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "SetAttributeSuperObjectObject": {
+                "uniqueItems": true,
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/AttributeSuperObjectObject"
+                }
+            },
+            "AttributeObjectObject": {
+                "type": "object",
+                "properties": {
+                    "declaringType": {
+                        "$ref": "#/components/schemas/ManagedTypeObject1"
+                    },
+                    "javaMember": {
+                        "type": "object"
+                    },
+                    "javaType": {
+                        "type": "object"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "persistentAttributeType": {
+                        "$ref": "#/components/schemas/PersistentAttributeType"
+                    },
+                    "association": {
+                        "type": "boolean"
+                    },
+                    "collection": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "SetAttributeObjectObject": {
+                "uniqueItems": true,
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/AttributeObjectObject"
+                }
+            },
+            "PluralAttributeObjectObjectObject": {
+                "type": "object",
+                "properties": {
+                    "declaringType": {
+                        "$ref": "#/components/schemas/ManagedTypeObject1"
+                    },
+                    "javaMember": {
+                        "type": "object"
+                    },
+                    "javaType": {
+                        "type": "object"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "persistentAttributeType": {
+                        "$ref": "#/components/schemas/PersistentAttributeType"
+                    },
+                    "association": {
+                        "type": "boolean"
+                    },
+                    "collection": {
+                        "type": "boolean"
+                    },
+                    "bindableJavaType": {
+                        "type": "object"
+                    },
+                    "bindableType": {
+                        "$ref": "#/components/schemas/BindableType"
+                    },
+                    "collectionType": {
+                        "$ref": "#/components/schemas/CollectionType"
+                    },
+                    "elementType": {
+                        "$ref": "#/components/schemas/TypeObject"
+                    }
+                }
+            },
+            "SetPluralAttributeObjectObjectObject": {
+                "uniqueItems": true,
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/PluralAttributeObjectObjectObject"
+                }
+            },
+            "SingularAttributeObjectObject": {
+                "type": "object",
+                "properties": {
+                    "declaringType": {
+                        "$ref": "#/components/schemas/ManagedTypeObject1"
+                    },
+                    "javaMember": {
+                        "type": "object"
+                    },
+                    "javaType": {
+                        "type": "object"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "persistentAttributeType": {
+                        "$ref": "#/components/schemas/PersistentAttributeType"
+                    },
+                    "association": {
+                        "type": "boolean"
+                    },
+                    "collection": {
+                        "type": "boolean"
+                    },
+                    "bindableJavaType": {
+                        "type": "object"
+                    },
+                    "bindableType": {
+                        "$ref": "#/components/schemas/BindableType"
+                    },
+                    "type": {
+                        "$ref": "#/components/schemas/TypeObject"
+                    },
+                    "id": {
+                        "type": "boolean"
+                    },
+                    "optional": {
+                        "type": "boolean"
+                    },
+                    "version": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "SetSingularAttributeObjectObject": {
+                "uniqueItems": true,
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/SingularAttributeObjectObject"
+                }
+            },
+            "PluralAttributeSuperObjectObjectObject": {
+                "type": "object",
+                "properties": {
+                    "declaringType": {
+                        "$ref": "#/components/schemas/ManagedTypeSuperObject"
+                    },
+                    "javaMember": {
+                        "type": "object"
+                    },
+                    "javaType": {
+                        "type": "object"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "persistentAttributeType": {
+                        "$ref": "#/components/schemas/PersistentAttributeType"
+                    },
+                    "association": {
+                        "type": "boolean"
+                    },
+                    "collection": {
+                        "type": "boolean"
+                    },
+                    "bindableJavaType": {
+                        "type": "object"
+                    },
+                    "bindableType": {
+                        "$ref": "#/components/schemas/BindableType"
+                    },
+                    "collectionType": {
+                        "$ref": "#/components/schemas/CollectionType"
+                    },
+                    "elementType": {
+                        "$ref": "#/components/schemas/TypeObject"
+                    }
+                }
+            },
+            "SetPluralAttributeSuperObjectObjectObject": {
+                "uniqueItems": true,
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/PluralAttributeSuperObjectObjectObject"
+                }
+            },
+            "SingularAttributeSuperObjectObject": {
+                "type": "object",
+                "properties": {
+                    "declaringType": {
+                        "$ref": "#/components/schemas/ManagedTypeSuperObject"
+                    },
+                    "javaMember": {
+                        "type": "object"
+                    },
+                    "javaType": {
+                        "type": "object"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "persistentAttributeType": {
+                        "$ref": "#/components/schemas/PersistentAttributeType"
+                    },
+                    "association": {
+                        "type": "boolean"
+                    },
+                    "collection": {
+                        "type": "boolean"
+                    },
+                    "bindableJavaType": {
+                        "type": "object"
+                    },
+                    "bindableType": {
+                        "$ref": "#/components/schemas/BindableType"
+                    },
+                    "type": {
+                        "$ref": "#/components/schemas/TypeObject"
+                    },
+                    "id": {
+                        "type": "boolean"
+                    },
+                    "optional": {
+                        "type": "boolean"
+                    },
+                    "version": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "SetSingularAttributeSuperObjectObject": {
+                "uniqueItems": true,
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/SingularAttributeSuperObjectObject"
+                }
+            },
+            "ManagedTypeSuperObject": {
+                "type": "object",
+                "properties": {
+                    "javaType": {
+                        "type": "object"
+                    },
+                    "persistenceType": {
+                        "$ref": "#/components/schemas/PersistenceType"
+                    },
+                    "attributes": {
+                        "$ref": "#/components/schemas/SetAttributeSuperObjectObject"
+                    },
+                    "declaredAttributes": {
+                        "$ref": "#/components/schemas/SetAttributeObjectObject"
+                    },
+                    "declaredPluralAttributes": {
+                        "$ref": "#/components/schemas/SetPluralAttributeObjectObjectObject"
+                    },
+                    "declaredSingularAttributes": {
+                        "$ref": "#/components/schemas/SetSingularAttributeObjectObject"
+                    },
+                    "pluralAttributes": {
+                        "$ref": "#/components/schemas/SetPluralAttributeSuperObjectObjectObject"
+                    },
+                    "singularAttributes": {
+                        "$ref": "#/components/schemas/SetSingularAttributeSuperObjectObject"
+                    }
+                }
+            },
+            "PersistentAttributeType": {
+                "enum": [
+                    "BASIC",
+                    "ELEMENT_COLLECTION",
+                    "EMBEDDED",
+                    "MANY_TO_MANY",
+                    "MANY_TO_ONE",
+                    "ONE_TO_MANY",
+                    "ONE_TO_ONE"
+                ],
+                "type": "string"
+            },
+            "BindableType": {
+                "enum": [
+                    "ENTITY_TYPE",
+                    "PLURAL_ATTRIBUTE",
+                    "SINGULAR_ATTRIBUTE"
+                ],
+                "type": "string"
+            },
+            "TypeObject": {
+                "type": "object",
+                "properties": {
+                    "javaType": {
+                        "type": "object"
+                    },
+                    "persistenceType": {
+                        "$ref": "#/components/schemas/PersistenceType"
+                    }
+                }
+            },
+            "CollectionType": {
+                "enum": [
+                    "COLLECTION",
+                    "LIST",
+                    "MAP",
+                    "SET"
+                ],
+                "type": "string"
+            },
+            "ManagedTypeObject1": {
+                "description": "Cyclic reference to javax.persistence.metamodel.ManagedType",
+                "type": "object"
+            },
+            "IdentifiableTypeSuperObject": {
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "$ref": "#/components/schemas/SetAttributeSuperObjectObject"
+                    },
+                    "declaredAttributes": {
+                        "$ref": "#/components/schemas/SetAttributeObjectObject"
+                    },
+                    "declaredPluralAttributes": {
+                        "$ref": "#/components/schemas/SetPluralAttributeObjectObjectObject"
+                    },
+                    "declaredSingularAttributes": {
+                        "$ref": "#/components/schemas/SetSingularAttributeObjectObject"
+                    },
+                    "pluralAttributes": {
+                        "$ref": "#/components/schemas/SetPluralAttributeSuperObjectObjectObject"
+                    },
+                    "singularAttributes": {
+                        "$ref": "#/components/schemas/SetSingularAttributeSuperObjectObject"
+                    },
+                    "javaType": {
+                        "type": "object"
+                    },
+                    "persistenceType": {
+                        "$ref": "#/components/schemas/PersistenceType"
+                    },
+                    "idClassAttributes": {
+                        "$ref": "#/components/schemas/SetSingularAttributeSuperObjectObject"
+                    },
+                    "idType": {
+                        "$ref": "#/components/schemas/TypeObject"
+                    },
+                    "supertype": {
+                        "$ref": "#/components/schemas/IdentifiableTypeSuperObject"
+                    }
+                }
+            },
+            "Cache": {
+                "type": "object"
+            },
+            "PersistenceUnitUtil": {
+                "type": "object"
+            },
+            "Hero": {
+                "required": [
+                    "level",
+                    "name"
+                ],
+                "type": "object",
+                "properties": {
+                    "entityManager": {
+                        "$ref": "#/components/schemas/EntityManager"
+                    },
+                    "persistent": {
+                        "type": "boolean"
+                    },
+                    "id": {
+                        "format": "int64",
+                        "type": "integer"
+                    },
+                    "level": {
+                        "nullable": false,
+                        "format": "int32",
+                        "minimum": 1,
+                        "type": "integer"
+                    },
+                    "name": {
+                        "nullable": false,
+                        "maxLength": 50,
+                        "minLength": 3,
+                        "type": "string"
+                    },
+                    "otherName": {
+                        "type": "string"
+                    },
+                    "picture": {
+                        "type": "string"
+                    },
+                    "powers": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "api",
+            "description": "Public that can be used by anybody"
+        },
+        {
+            "name": "heroes",
+            "description": "Anybody interested in heroes"
+        }
+    ],
+    "externalDocs": {
+        "description": "All the Quarkus workshops",
+        "url": "https://github.com/ocp4labs/bbva_ninja/tree/master/chapter_quarkus"
+    }
+}
